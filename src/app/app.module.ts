@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { ScheduleServiceService } from './services/schedule-service.service';
+import { ScheduleService } from './services/schedule.service';
 import { SchedulesComponent } from './components/schedules/schedules.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -13,10 +15,13 @@ import { SchedulesComponent } from './components/schedules/schedules.component';
     SchedulesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+
+    FlexLayoutModule
   ],
   providers: [
-    ScheduleServiceService
+    ScheduleService
   ],
   bootstrap: [AppComponent]
 })
