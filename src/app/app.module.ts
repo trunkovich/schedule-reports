@@ -3,16 +3,21 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { ScheduleServiceService } from './services/schedule-service.service';
+import { SchedulesComponent } from './components/schedules/schedules.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SchedulesComponent
   ],
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    ScheduleServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
