@@ -1,4 +1,39 @@
 :host {
   display: block;
   box-sizing: border-box;
+  height: 100%;
+
+  .container {
+    height: 100%;
+
+    .logo-block {
+      margin: 35px;
+
+      .logo {
+        width: 126px;
+        height: 163px;
+      }
+      .title {
+        margin-top: 30px;
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 2.8px;
+        color: #27a5bc;
+      }
+    }
+
+    .headline {
+      margin-top: 30px;
+      line-height: 85.75px;
+      font-size: 63px;
+      font-weight: 600;
+    }
+
+    .group {
+      margin-top: 19px;
+      margin-bottom: 115px;
+      line-height: 42px;
+      font-size: 28px;
+    }
+  }
 }
