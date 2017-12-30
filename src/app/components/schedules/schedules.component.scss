@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  padding: 20px;
+
+  .page {
+    display: block;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: white;
+    width: 1024px;
+    height: 1500px;
+    margin-bottom: 20px;
+  }
+
+}
+
+
+@media print {
+  :host {
+    .page {
+      box-shadow: none;
+      page-break-after: always;
+      margin-bottom: 0;
+    }
+  }
+}
