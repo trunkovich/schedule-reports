@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+
 import { QueryParams, ScheduleService } from '../../services/schedule.service';
 import { getAllUrlParams } from '../../utils/utils';
+import { ScheduleData } from '../../models/create-schedule.model';
 
 @Component({
   selector: 'app-schedules',
@@ -10,6 +13,7 @@ import { getAllUrlParams } from '../../utils/utils';
 export class SchedulesComponent implements OnInit {
   wrongParams: boolean;
   params: QueryParams;
+  scheduleDate: moment.Moment;
 
   constructor(private scheduleService: ScheduleService) { }
 
@@ -24,7 +28,8 @@ export class SchedulesComponent implements OnInit {
         scheduleMonth: params.schedulemonth
       };
       this.scheduleService.loadData(this.params)
-        .subscribe(data => {
+        .subscribe((data: ScheduleData[]) => {
+          this.scheduleDate = moment({month: +this.params.scheduleMonth, year: +this.params.scheduleYear});
           console.log(data);
         });
     }

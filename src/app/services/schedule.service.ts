@@ -7,7 +7,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { ScheduleRequestByEmployeeListResponse, ScheduleRequestDetailsResponse } from '../models/create-schedule-response.model';
 import { EmployeeResponse } from '../models/employee-response.model';
 import { Employee } from '../models/employee.model';
-import { CreateScheduleDetailsModel } from '../models/create-schedule.model';
+import { CreateScheduleDetailsModel, ScheduleData } from '../models/create-schedule.model';
 import { RequestCalendar } from './schedule-request-calendar.class';
 
 export interface QueryParams {
@@ -71,7 +71,7 @@ export class ScheduleService {
       );
   }
 
-  loadData({groupId, scheduleYear, scheduleMonth}: QueryParams) {
+  loadData({groupId, scheduleYear, scheduleMonth}: QueryParams): Observable<Array<ScheduleData>> {
     return this.loadScheduleRequests({groupId, scheduleYear, scheduleMonth})
       .pipe(
         switchMap((ids: Array<{scheduleRequestId: number; employeeId: number; }>) => {

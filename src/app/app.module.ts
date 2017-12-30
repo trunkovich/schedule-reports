@@ -8,6 +8,7 @@ import { SchedulesComponent } from './components/schedules/schedules.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IntroductionPageComponent } from './components/introduction-page/introduction-page.component';
+import { MomentModule } from 'angular2-moment';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { IntroductionPageComponent } from './components/introduction-page/introd
   imports: [
     BrowserModule,
     HttpClientModule,
-
+    MomentModule,
     FlexLayoutModule
   ],
   providers: [

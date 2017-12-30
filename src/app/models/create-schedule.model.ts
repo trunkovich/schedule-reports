@@ -1,5 +1,8 @@
 
 
+import { Employee } from './employee.model';
+import { RequestCalendar } from '../services/schedule-request-calendar.class';
+
 export interface CreateScheduleModel {
   ScheduleRequestID: number;
   ScheduleMonth: number;
@@ -74,4 +77,11 @@ export interface CreateScheduleDetailsModel {
   VolunteerShiftList: VolunteerShiftModel[];
   EducationalLeaveList: EducationalLeaveModel[];
   PreferredOffWeekendList: PreferredOffWeekendModel[];
+}
+
+export interface ScheduleData {
+  employeeID: number;
+  employee: Employee;
+  report: CreateScheduleDetailsModel;
+  calendar: RequestCalendar;
 }
