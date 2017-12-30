@@ -9,13 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IntroductionPageComponent } from './components/introduction-page/introduction-page.component';
 import { MomentModule } from 'angular2-moment';
+import { EmployeeProfilePageComponent } from './components/employee-profile-page/employee-profile-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SchedulesComponent,
-    IntroductionPageComponent
+    IntroductionPageComponent,
+    EmployeeProfilePageComponent
   ],
   imports: [
     BrowserModule,

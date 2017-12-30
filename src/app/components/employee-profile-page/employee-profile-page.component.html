@@ -1,0 +1,44 @@
+<div class="profile-page" *ngIf="employee">
+  <h1>{{employee.FirstName}} {{employee.LastName}} - Information</h1>
+
+  <h3>GENERAL INFORMATION</h3>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start start">
+    <div class="title">PROFILE PICTURE</div>
+    <div class="avatar" fxLayout="row" fxLayoutAlign="center center">
+      <img [src]="employee.PhotoUrl"/>
+    </div>
+  </div>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">FIRST NAME</div>
+    <div class="value">{{employee.FirstName}}</div>
+  </div>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">LAST NAME</div>
+    <div class="value">{{employee.LastName}}</div>
+  </div>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">GROUP</div>
+    <div class="value">{{employee.GroupID}}</div>
+  </div>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">ONBOARD FROM</div>
+    <div class="value">{{employee.RegistrationCompletionDateTime | amDateFormat:'M-D-YYYY'}}</div>
+  </div>
+
+  <h3>CONTACT INFORMATION</h3>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">EMAIL</div>
+    <div class="value">{{employee.Email}}</div>
+  </div>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">MOBILE</div>
+    <div class="value">{{employee.MobilePhone}}</div>
+  </div>
+
+  <h3>OTHER INFORMATION</h3>
+  <div class="info-line" fxLayout="row" fxLayoutAlign="start center">
+    <div class="title">WORK UNIT VALUE</div>
+    <div class="value">{{employee.WorkUnitValue}}</div>
+  </div>
+
+</div>

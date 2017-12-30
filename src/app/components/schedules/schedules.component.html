@@ -2,4 +2,9 @@
   <div class="page">
     <app-introduction-page [scheduleDate]="scheduleDate"></app-introduction-page>
   </div>
+  <div *ngFor="let employeeSchedule of scheduleData">
+    <div class="page">
+      <app-employee-profile-page [employee]="employeeSchedule.employee"></app-employee-profile-page>
+    </div>
+  </div>
 </div>

@@ -14,6 +14,7 @@ export class SchedulesComponent implements OnInit {
   wrongParams: boolean;
   params: QueryParams;
   scheduleDate: moment.Moment;
+  scheduleData: ScheduleData[];
 
   constructor(private scheduleService: ScheduleService) { }
 
@@ -27,10 +28,10 @@ export class SchedulesComponent implements OnInit {
         scheduleYear: params.scheduleyear,
         scheduleMonth: params.schedulemonth
       };
+      this.scheduleDate = moment({month: +this.params.scheduleMonth, year: +this.params.scheduleYear});
       this.scheduleService.loadData(this.params)
         .subscribe((data: ScheduleData[]) => {
-          this.scheduleDate = moment({month: +this.params.scheduleMonth, year: +this.params.scheduleYear});
-          console.log(data);
+          this.scheduleData = data;
         });
     }
   }
