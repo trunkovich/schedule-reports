@@ -1,0 +1,129 @@
+<div class="profile-page" *ngIf="employee">
+  <h1>{{employee.FirstName}} {{employee.LastName}} - {{scheduleDate | amDateFormat:'MMMM YYYY'}}</h1>
+
+  <div class="schedule-container" fxLayout="row" fxLayoutAlign="space-between" *ngIf="calendar">
+    <div class="left-block side-block"></div>
+    <div class="right-block side-block">
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark vacation-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Vacation Days Request</h4>
+        </div>
+        <p *ngFor="let vacationDay of calendar.vacationDays">
+          <span *ngIf="vacationDay.type === 1">On {{vacationDay.start | amDateFormat:'MM/DD/YYYY'}}</span>
+          <span *ngIf="vacationDay.type === 2">From {{vacationDay.start | amDateFormat:'MM/DD/YYYY'}} to {{vacationDay.start | amDateFormat:'MM/DD/YYYY'}}</span>
+        </p>
+      </div>
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark call-unavailability-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Calls/Backups Unavailability</h4>
+        </div>
+        <p *ngFor="let callUnavailability of calendar.callUnavailabilityDates">
+          I'll not available for {{callUnavailability.type | callUnavailabilityType}} on {{callUnavailability.date | amDateFormat:'MM/DD/YYYY'}}
+        </p>
+      </div>
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark educational-leave-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Educational Leave Requests (LV)</h4>
+        </div>
+        <div *ngFor="let educationLeave of calendar.educationLeaves; let i = index">
+          <p><span class="bold">Activity Name #{{i + 1}}: </span>{{educationLeave.name}}</p>
+          <p><span class="bold">Description #{{i + 1}}: </span>{{educationLeave.description}}</p>
+          <p><span class="bold">Date #{{i + 1}}: </span>{{educationLeave.date | amDateFormat:'MM/DD/YYYY'}}</p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark call-night-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Preferred Call Nights</h4>
+        </div>
+        <div *ngFor="let index of [1, 2, 3, 4, 5]">
+          <p *ngIf="calendar.callNights[index]">
+            <span class="bold">{{index}} call night: </span>{{calendar.callNights[index] | amDateFormat:'MM/DD/YYYY'}}
+          </p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark off-weekend-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Preferred OFF-WEEK</h4>
+        </div>
+        <p>
+          {{calendar.offWeekend.label}}
+        </p>
+      </div>
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark hospitalist-rounding-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Hospitality Only</h4>
+        </div>
+        <p *ngIf="hospitalRoundings[0]">
+          <span class="bold">1st week for rounding: </span>{{hospitalRoundings[0]}}
+        </p>
+        <p *ngIf="hospitalRoundings[1]">
+          <span class="bold">2nd week for rounding: </span>{{hospitalRoundings[1]}}
+        </p>
+      </div>
+
+      <div class="info-block" *ngIf="calendar.volunteerShift">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark volunteer-shift-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Volunteer Shift</h4>
+        </div>
+        <p><span class="bold">Available on: </span>{{calendar.volunteerShift.date | amDateFormat:'DD/MM/YYYY'}}</p>
+        <p><span class="bold">Shift: </span>{{calendar.volunteerShift.shiftId | shiftType}}</p>
+        <p><span class="bold">Where: </span>{{calendar.volunteerShift.hospitalId | hospital}}</p>
+      </div>
+
+      <div class="info-block">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="mark comp-time-bg">
+            <svg style="width:20px;height:20px" viewBox="0 0 20 20" fill="white">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+          </div>
+          <h4>Comp-time preferred</h4>
+        </div>
+        <p><span class="bold">{{calendar.compTime ? 'YES' : 'NO'}}</span></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>

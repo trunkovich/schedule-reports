@@ -9,6 +9,14 @@ import { EmployeeResponse } from '../models/employee-response.model';
 import { Employee } from '../models/employee.model';
 import { CreateScheduleDetailsModel, ScheduleData } from '../models/create-schedule.model';
 import { RequestCalendar } from './schedule-request-calendar.class';
+import { CallUnavailabilityTypesListResponse } from '../models/call-unavailability-types-list-response.model';
+import { CallUnavailabilityType } from '../models/call-unavailability-type.model';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ShiftType } from '../models/shift-type.model';
+import { Hospital } from '../models/hospital.model';
+import { ShiftTypesListResponse } from '../models/shift-types-list-response.model';
+import { HospitalsListResponse } from '../models/hospitals-list-response.model';
 
 export interface QueryParams {
   groupId: string;
@@ -18,10 +26,16 @@ export interface QueryParams {
 
 @Injectable()
 export class ScheduleService {
+  callUnavailabilityTypes$ = new BehaviorSubject<CallUnavailabilityType[] | null>(null);
+  shiftTypes$ = new BehaviorSubject<ShiftType[] | null>(null);
+  hospitals$ = new BehaviorSubject<Hospital[] | null>(null);
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   loadScheduleRequests({groupId, scheduleYear, scheduleMonth}: QueryParams) {
+    this.loadCallUnavailabilityTypes(groupId);
+    this.loadShiftTypes(groupId);
+    this.loadHospitals(groupId);
     return this.httpClient.get('http://api.brainstorm.live/api/hub/Report_GetScheduleRequestByGroupYearMonth', {
       params: { groupId, scheduleYear, scheduleMonth }
     })
@@ -65,10 +79,58 @@ export class ScheduleService {
           if (response.IsSuccess) {
             return response.Employee;
           } else {
-            return Observable.throw('can\'t get employee data');
+            Observable.throw('can\'t get employee data');
           }
         })
       );
+  }
+
+  loadCallUnavailabilityTypes(groupId) {
+    this.httpClient.get(`http://api.brainstorm.live/api/hub/GetCallUnavailabilityTypes?groupid=${groupId}`)
+      .pipe(
+        map((response: CallUnavailabilityTypesListResponse) => {
+          if (response.IsSuccess) {
+            return response.CallUnavailabilityTypeList;
+          } else {
+            Observable.throw('can\'t get employee data');
+          }
+        })
+      )
+      .subscribe(types => {
+        this.callUnavailabilityTypes$.next(types);
+      });
+  }
+
+  loadShiftTypes(groupId) {
+    this.httpClient.get(`http://api.brainstorm.live/api/hub/GetShiftTypes?groupid=${groupId}`)
+      .pipe(
+        map((response: ShiftTypesListResponse) => {
+          if (response.IsSuccess) {
+            return response.ShiftList;
+          } else {
+            Observable.throw('can\'t get shifts list');
+          }
+        })
+      )
+      .subscribe(types => {
+        this.shiftTypes$.next(types);
+      });
+  }
+
+  loadHospitals(groupId) {
+    this.httpClient.get(`http://api.brainstorm.live/api/hub/GetHospitals?groupid=${groupId}`)
+      .pipe(
+        map((response: HospitalsListResponse) => {
+          if (response.IsSuccess) {
+            return response.HospitalList;
+          } else {
+            Observable.throw('can\'t get hospitals list');
+          }
+        })
+      )
+      .subscribe(hospitals => {
+        this.hospitals$.next(hospitals);
+      });
   }
 
   loadData({groupId, scheduleYear, scheduleMonth}: QueryParams): Observable<Array<ScheduleData>> {

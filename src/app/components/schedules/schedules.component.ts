@@ -28,7 +28,7 @@ export class SchedulesComponent implements OnInit {
         scheduleYear: params.scheduleyear,
         scheduleMonth: params.schedulemonth
       };
-      this.scheduleDate = moment({month: +this.params.scheduleMonth, year: +this.params.scheduleYear});
+      this.scheduleDate = moment({month: +this.params.scheduleMonth - 1, year: +this.params.scheduleYear});
       this.scheduleService.loadData(this.params)
         .subscribe((data: ScheduleData[]) => {
           this.scheduleData = data;

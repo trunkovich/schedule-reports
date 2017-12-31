@@ -6,5 +6,10 @@
     <div class="page">
       <app-employee-profile-page [employee]="employeeSchedule.employee"></app-employee-profile-page>
     </div>
+    <div class="page">
+      <app-employee-schedule-page [employee]="employeeSchedule.employee"
+                                  [calendar]="employeeSchedule.calendar"
+                                  [scheduleDate]="scheduleDate"></app-employee-schedule-page>
+    </div>
   </div>
 </div>

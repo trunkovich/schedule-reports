@@ -145,50 +145,8 @@ export class RequestCalendar {
         }
       });
     } else {
-      this.vacationDays = [{type: 1, start: null}];
+      this.vacationDays = [];
     }
-  }
-  setVacationDays(vacationDays: VacationDays): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.VacationWindowList = _.map(vacationDays, (vacationDay: VacationDay) => {
-      return {
-        StartDate: vacationDay.start.toISOString(),
-        EndDate: vacationDay.type === 2 ? (!!vacationDay.end ? vacationDay.end.toISOString() : null) : vacationDay.start.toISOString(),
-        ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-        EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-        GroupID: this.initialData.ScheduleRequest.GroupID,
-        VacationWindowID: null,
-        VacationWindowTypeID: vacationDay.type,
-      };
-    });
-    return new RequestCalendar(newData);
-  }
-  isVacationWindowsChanged(): boolean {
-    return _.some(this.initialData.VacationWindowList, vacation => !vacation.VacationWindowID);
-  }
-  isVacationWindowsValid(): boolean {
-    return _.every(this.vacationDays, (vacationDay: VacationDay) => {
-      if (!vacationDay) {
-        return false;
-      }
-      if (vacationDay.type === 1) {
-        return !!vacationDay.start && vacationDay.start.isValid();
-      } else {
-        return !!vacationDay.start && vacationDay.start.isValid() &&
-               !!vacationDay.end && vacationDay.end.isValid() &&
-               vacationDay.start.isBefore(vacationDay.end);
-      }
-    });
-  }
-  addBlankVacationDay() {
-    this.vacationDays.push({type: 1, start: null});
-  }
-  isVacationWindowsReady(): boolean {
-    return !!(
-      this.initialData.VacationWindowList &&
-      this.initialData.VacationWindowList.length &&
-      _.some(this.initialData.VacationWindowList, (vacation) => !!vacation.VacationWindowID)
-    );
   }
 
 
@@ -206,42 +164,9 @@ export class RequestCalendar {
         });
       _.each(this.callUnavailabilityDates, (day: CallUnavailabilityDay) => this.addEvent(day.date, '#5dcf5e'));
     } else {
-      this.callUnavailabilityDates = [{date: null, type: 1}];
+      this.callUnavailabilityDates = [];
     }
   }
-  setCallUnavailabilityDays(days: CallUnavailabilityDays): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.CallUnavailabilityWindowList = _.map(days, day => {
-      return {
-        CallUnavailabilityWindowID: null,
-        CallUnavailabilityTypeID: day.type,
-        Date: day.date ? day.date.toISOString() : null,
-        ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-        EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-        GroupID: this.initialData.ScheduleRequest.GroupID,
-      };
-    });
-    return new RequestCalendar(newData);
-  }
-  isCallUnavailabilityWindowsChanged(): boolean {
-    return _.some(this.initialData.CallUnavailabilityWindowList, day => !day.CallUnavailabilityWindowID);
-  }
-  isCallUnavailabilityWindowsValid(): boolean {
-    return _.every(this.callUnavailabilityDates, day => {
-      return !!day && day.date && day.date.isValid();
-    });
-  }
-  addBlankCallUnavailabilityDay() {
-    this.callUnavailabilityDates.push({date: null, type: 1});
-  }
-  isCallUnavailabilityReady(): boolean {
-    return !!(
-      this.initialData.CallUnavailabilityWindowList &&
-      this.initialData.CallUnavailabilityWindowList.length &&
-      _.some(this.initialData.CallUnavailabilityWindowList, (window) => !!window.CallUnavailabilityWindowID)
-    );
-  }
-
 
 
 
@@ -261,40 +186,6 @@ export class RequestCalendar {
       this.educationLeaves = [{date: null, name: '', description: ''}];
     }
   }
-  setEducationLeaves(days: EducationLeaves): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.EducationalLeaveList = _.map(days, day => {
-      return {
-        EducationalLeaveID: null,
-        ActivityName: day.name,
-        ActivityDescription: day.description,
-        Date: day.date ? day.date.toISOString() : null,
-        ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-        EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-        GroupID: this.initialData.ScheduleRequest.GroupID,
-      };
-    });
-    return new RequestCalendar(newData);
-  }
-  isEducationLeavesChanged(): boolean {
-    return _.some(this.initialData.EducationalLeaveList, day => !day.EducationalLeaveID);
-  }
-  isEducationLeavesValid(): boolean {
-    return _.every(this.educationLeaves, day => {
-      return !!day && day.date && day.date.isValid() && day.name && day.description;
-    });
-  }
-  addBlankEducationLeave() {
-    this.educationLeaves.push({date: null, name: '', description: ''});
-  }
-  isEducationLeaveReady(): boolean {
-    return !!(
-      this.initialData.EducationalLeaveList &&
-      this.initialData.EducationalLeaveList.length &&
-      _.some(this.initialData.EducationalLeaveList, (leave) => !!leave.EducationalLeaveID)
-    );
-  }
-
 
 
 
@@ -312,44 +203,6 @@ export class RequestCalendar {
       });
     }
   }
-  setCallNights(days: CallNights): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.PreferredCallNightList = _.map(days, (day, key) => {
-      if (!day) {
-        return null;
-      }
-      return {
-        PreferredCallNightID: null,
-        CallNightTypeID: +key,
-        Date: day ? day.toISOString() : null,
-        ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-        EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-        GroupID: this.initialData.ScheduleRequest.GroupID,
-      };
-    });
-    newData.PreferredCallNightList = _.filter(newData.PreferredCallNightList, night => !!night);
-    return new RequestCalendar(newData);
-  }
-  isCallNightsChanged(): boolean {
-    return _.some(this.initialData.PreferredCallNightList, day => !day.PreferredCallNightID);
-  }
-  isCallNightsValid(): boolean {
-    return _.every(this.callNights, (day, key) => {
-      if (key && (+key > 2)) {
-        return !!day && day.isValid() || !day;
-      }
-      return !!day && day.isValid();
-    });
-  }
-  isCallNightsReady(): boolean {
-    return !!(
-      this.initialData.PreferredCallNightList &&
-      this.initialData.PreferredCallNightList.length &&
-      _.filter(this.initialData.PreferredCallNightList, (callNight) =>
-        callNight.CallNightTypeID > 0 && callNight.CallNightTypeID < 3 && callNight.PreferredCallNightID
-      ).length === 2
-    );
-  }
 
 
 
@@ -365,19 +218,6 @@ export class RequestCalendar {
       this.addEvent(start.add(1, 'day'), '#ab78f9');
       this.addEvent(start.add(1, 'day'), '#ab78f9');
     }
-  }
-  setOffWeekends(weekend: Weekend): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.PreferredOffWeekendList = [{
-      StartDate: weekend.start.toISOString(),
-      EndDate: weekend.end.toISOString(),
-      ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-      EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-      GroupID: this.initialData.ScheduleRequest.GroupID,
-      PreferredOffWeekendID: null,
-      Label: weekend.label
-    }];
-    return new RequestCalendar(newData);
   }
   getWeekends(month: moment.Moment): Weekend[] {
     const weekends: Weekend[] = [];
@@ -414,13 +254,6 @@ export class RequestCalendar {
     });
     return weekends;
   }
-  isOffWeekendReady(): boolean {
-    return !!(
-      this.initialData.PreferredOffWeekendList &&
-      this.initialData.PreferredOffWeekendList.length &&
-      _.some(this.initialData.PreferredOffWeekendList, (offWeekend) => !!offWeekend.PreferredOffWeekendID)
-    );
-  }
 
 
 
@@ -448,38 +281,6 @@ export class RequestCalendar {
       this.hospitalistRoundings = [null, null];
     }
   }
-  setHospitalistRoundings(days: moment.Moment[]): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.HospitalistRoundingList = [];
-    _.each(days, (day, i) => {
-      if (day) {
-        newData.HospitalistRoundingList.push({
-          StartDate: day.toISOString(),
-          EndDate: day.endOf('week').toISOString(),
-          ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-          EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-          GroupID: this.initialData.ScheduleRequest.GroupID,
-          HospitalRoundingID: null,
-          RoundingTypeID: i + 1
-        });
-      }
-    });
-    return new RequestCalendar(newData);
-  }
-  isHospitalistRoundingsChanged(): boolean {
-    return !this.initialData.HospitalistRoundingList.length ||
-      _.some(this.initialData.HospitalistRoundingList, rounding => !rounding.HospitalRoundingID);
-  }
-  isHospitalRoundingsBlank(): boolean {
-    return !this.initialData.HospitalistRoundingList.length;
-  }
-  isHospitalRoundingsReady(): boolean {
-    return !!(
-      this.initialData.HospitalistRoundingList &&
-      this.initialData.HospitalistRoundingList.length &&
-      _.some(this.initialData.HospitalistRoundingList, (hospitalistRounding) => !!hospitalistRounding.HospitalRoundingID)
-    );
-  }
 
 
 
@@ -493,43 +294,7 @@ export class RequestCalendar {
       };
       this.addEvent(this.volunteerShift.date, '#f14437');
     } else {
-      this.volunteerShift = {date: null, hospitalId: null, shiftId: null};
+      this.volunteerShift = null;
     }
-  }
-  setVolunteerShift(day: VolunteerShift): RequestCalendar {
-    const newData = _.cloneDeep<requestModels.CreateScheduleDetailsModel>(this.initialData);
-    newData.VolunteerShiftList = [];
-    if (day && day.date) {
-      newData.VolunteerShiftList.push({
-        VolunteerShiftID: null,
-        HospitalID: day.hospitalId,
-        ShiftID: day.shiftId,
-        Date: day.date ? day.date.toISOString() : null,
-        ScheduleRequestID: this.initialData.ScheduleRequest.ScheduleRequestID,
-        EmployeeID: this.initialData.ScheduleRequest.EmployeeID,
-        GroupID: this.initialData.ScheduleRequest.GroupID,
-      });
-    }
-    return new RequestCalendar(newData);
-  }
-  isVolunteerShiftChanged(): boolean {
-    return this.initialData.VolunteerShiftList &&
-      (!this.initialData.VolunteerShiftList.length || !this.initialData.VolunteerShiftList[0].VolunteerShiftID);
-  }
-  isVolunteerShiftValid(): boolean {
-    const shift: VolunteerShift = this.volunteerShift;
-    return shift && shift.date && shift.date.isValid() && shift.hospitalId && !!shift.shiftId ||
-      !shift.date && !shift.hospitalId && !shift.shiftId;
-  }
-  isVolunteerShiftReady(): boolean {
-    return !!(
-      this.initialData.VolunteerShiftList &&
-      this.initialData.VolunteerShiftList.length &&
-      _.some(this.initialData.VolunteerShiftList, (volunteerShift) => !!volunteerShift.VolunteerShiftID)
-    );
-  }
-
-  isCompTimeSet(): boolean {
-    return this.compTime === true || this.compTime === false;
   }
 }

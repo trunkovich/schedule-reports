@@ -10,6 +10,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { IntroductionPageComponent } from './components/introduction-page/introduction-page.component';
 import { MomentModule } from 'angular2-moment';
 import { EmployeeProfilePageComponent } from './components/employee-profile-page/employee-profile-page.component';
+import { EmployeeSchedulePageComponent } from './components/employee-schedule-page/employee-schedule-page.component';
+import { CallUnavailabilityTypePipe, HospitalPipe, ShiftTypePipe } from './pipes/pipes';
 
 
 @NgModule({
@@ -17,7 +19,12 @@ import { EmployeeProfilePageComponent } from './components/employee-profile-page
     AppComponent,
     SchedulesComponent,
     IntroductionPageComponent,
-    EmployeeProfilePageComponent
+    EmployeeProfilePageComponent,
+    EmployeeSchedulePageComponent,
+
+    CallUnavailabilityTypePipe,
+    ShiftTypePipe,
+    HospitalPipe
   ],
   imports: [
     BrowserModule,
