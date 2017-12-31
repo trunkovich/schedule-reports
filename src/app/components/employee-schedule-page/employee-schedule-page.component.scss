@@ -8,6 +8,41 @@
     .side-block {
       width: 460px;
 
+      &.left-block {
+
+        .user-block {
+          border-left: 3px solid #fd995d;
+
+          .avatar {
+            margin-left: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+              width: 100px;
+              height: 100px;
+            }
+          }
+          .user-info {
+            margin-left: 16px;
+            h4 {
+              margin: 0;
+              line-height: 28px;
+              font-size: 16px;
+              font-weight: 600;
+            }
+            p {
+              margin: 0;
+              line-height: 28px;
+              font-size: 16px;
+              color: #808e9c;
+            }
+          }
+        }
+      }
+
       &.right-block {
 
         .info-block {

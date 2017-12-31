@@ -2,7 +2,19 @@
   <h1>{{employee.FirstName}} {{employee.LastName}} - {{scheduleDate | amDateFormat:'MMMM YYYY'}}</h1>
 
   <div class="schedule-container" fxLayout="row" fxLayoutAlign="space-between" *ngIf="calendar">
-    <div class="left-block side-block"></div>
+
+    <div class="left-block side-block">
+      <div class="user-block" fxLayout="row">
+        <div class="avatar">
+          <img [src]="employee.PhotoUrl">
+        </div>
+        <div class="user-info">
+          <h4>{{employee.FirstName}} {{employee.LastName}}</h4>
+          <p>{{employee.GroupID}}</p>
+        </div>
+      </div>
+    </div>
+
     <div class="right-block side-block">
 
       <div class="info-block">
@@ -124,6 +136,7 @@
       </div>
 
     </div>
+
   </div>
 
 </div>
