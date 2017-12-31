@@ -1,0 +1,101 @@
+@import '../../../colors';
+@import '../../../mixins';
+@import '../../../helpers';
+
+:host {
+  display: block;
+
+  .calendar-wrapper {
+    z-index: 10;
+    overflow: hidden;
+
+    .calendar-title {
+      line-height: 24px;
+      margin-bottom: 19px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      color: #4a525a;
+    }
+
+    .calendar-header {
+      @include clearfix();
+      padding-left: 8px;
+      padding-right: 8px;
+      margin-bottom: 18px;
+
+      .week-header-entry {
+        @extend .float-left;
+        @extend .text-center;
+        @extend .bold-text;
+        @extend .weak-text;
+        font-size: 14px;
+        line-height: 17px;
+        min-width: 38px;
+        width: calc(100%/7);
+      }
+    }
+
+    .calendar-content-wrapper {
+      @extend .full-width;
+      overflow: hidden;
+      position: relative;
+
+      .calendar-view-type {
+        z-index: 2;
+
+        .calendar-content {
+          @include clearfix();
+          padding-left: 8px;
+          padding-right: 8px;
+
+          .calendar-entry-wrapper {
+            @extend .small-text;
+            @extend .float-left;
+            @extend .text-center;
+            min-height: 36px;
+            text-transform: uppercase;
+            line-height: 86px;
+            min-width: 36px;
+            width: calc(100%/4);
+
+            .calendar-entry {
+              @include center-block();
+              position: relative;
+
+              .event-day {
+                @include size(8px);
+                position: absolute;
+                left: 50%;
+                bottom: 2px;
+                margin-left: -5px;
+                border-radius: 50%;
+                border: 1px solid white;
+              }
+              .events-container {
+                height: 10px;
+                position: absolute;
+                left: 50%;
+                bottom: 2px;
+                transform: translateX(-50%);
+                .event-day2 {
+                  @include size(8px);
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  border-radius: 50%;
+                  border: 1px solid white
+                }
+              }
+            }
+            &.day-entry {
+              width: calc(100%/7);
+              line-height: 50px;
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

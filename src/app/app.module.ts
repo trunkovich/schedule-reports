@@ -12,6 +12,7 @@ import { MomentModule } from 'angular2-moment';
 import { EmployeeProfilePageComponent } from './components/employee-profile-page/employee-profile-page.component';
 import { EmployeeSchedulePageComponent } from './components/employee-schedule-page/employee-schedule-page.component';
 import { CallUnavailabilityTypePipe, HospitalPipe, ShiftTypePipe } from './pipes/pipes';
+import { ScheduleCalendarComponent } from './components/schedule-calendar/schedule-calendar.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { CallUnavailabilityTypePipe, HospitalPipe, ShiftTypePipe } from './pipes
     IntroductionPageComponent,
     EmployeeProfilePageComponent,
     EmployeeSchedulePageComponent,
+    ScheduleCalendarComponent,
 
     CallUnavailabilityTypePipe,
     ShiftTypePipe,

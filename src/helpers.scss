@@ -1,0 +1,104 @@
+@import 'colors.scss';
+@import 'resets.scss';
+
+.bold-text {
+  font-weight: 600;
+}
+.weak-text {
+  color: $bluish-grey;
+}
+.error-text {
+  color: $blush;
+}
+.headline-text {
+  font-size: 24px;
+}
+.headline-weak-text {
+  @extend .headline-text;
+  @extend .weak-text;
+}
+.big-text {
+  font-size: 16px;
+}
+.big-weak-text {
+  @extend .big-text;
+  @extend .weak-text;
+}
+.big-bold-text {
+  @extend .big-text;
+  @extend .bold-text;
+}
+.big-error-text {
+  @extend .big-text;
+  @extend .error-text;
+}
+.small-text {
+  font-size: 12px;
+}
+.small-weak-text {
+  @extend .small-text;
+  @extend .weak-text;
+}
+.small-bold-text {
+  @extend .small-text;
+  @extend .bold-text;
+}
+.small-bold-weak-text {
+  @extend .small-text;
+  @extend .bold-text;
+  @extend .weak-text;
+}
+.bold-weak-text {
+  @extend .bold-text;
+  @extend .weak-text;
+}
+.small-error-text {
+  @extend .small-text;
+  @extend .error-text;
+}
+.letter-spacing04 {
+  letter-spacing: 0.4px;
+}
+.white-text {
+  color: white;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
+.gradient1 {
+  background-image: linear-gradient(to bottom, #35b4c8, $tealish);
+}
+
+.gradient2 {
+  background-image: linear-gradient(135deg, #fbda61, #f76b1c);
+}
+
+.gradient3 {
+  background-image: linear-gradient(135deg, #f5515f, #dd3b4c 28%, #9f031b);
+}
+
+.full-width {
+  width: 100%;
+}
+.full-height {
+  height: 100%;
+}
+.blue-text {
+  color: $tealish;
+}
+.upper-text {
+  text-transform: uppercase;
+}

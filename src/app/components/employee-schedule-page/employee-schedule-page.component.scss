@@ -3,6 +3,13 @@
   box-sizing: border-box;
   height: 100%;
 
+  h1 {
+    margin-bottom: 42px;
+    line-height: 58px;
+    font-size: 42px;
+    font-weight: 600;
+  }
+
   .schedule-container {
 
     .side-block {
@@ -12,6 +19,7 @@
 
         .user-block {
           border-left: 3px solid #fd995d;
+          margin-bottom: 58px;
 
           .avatar {
             margin-left: 20px;
@@ -40,6 +48,10 @@
               color: #808e9c;
             }
           }
+        }
+
+        .calendar-wrapper {
+          margin-top: 58px;
         }
       }
 

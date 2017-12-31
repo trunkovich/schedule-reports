@@ -13,6 +13,11 @@
           <p>{{employee.GroupID}}</p>
         </div>
       </div>
+      <div class="calendar-wrapper">
+        <app-schedule-calendar [readOnlyMode]="true"
+                               [header]="scheduleDate | amDateFormat:'MMMM YYYY'"
+                               [days]="calendar.days"></app-schedule-calendar>
+      </div>
     </div>
 
     <div class="right-block side-block">

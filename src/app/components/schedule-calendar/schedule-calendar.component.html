@@ -1,0 +1,39 @@
+<div class="calendar-wrapper">
+
+  <div class="calendar-title">{{header}}</div>
+
+  <div class="calendar-header">
+    <div class="week-header-entry">S</div>
+    <div class="week-header-entry">M</div>
+    <div class="week-header-entry">T</div>
+    <div class="week-header-entry">W</div>
+    <div class="week-header-entry">T</div>
+    <div class="week-header-entry">F</div>
+    <div class="week-header-entry">S</div>
+  </div>
+
+  <div class="calendar-content-wrapper">
+    <div class="calendar-view-type">
+      <div class="calendar-content day">
+        <div class="calendar-entry-wrapper day-entry"
+             *ngFor="let day of days">
+          <div class="calendar-entry"
+               *ngIf="!readOnlyMode || !day.otherMonth">
+            {{day.date | amDateFormat:'D'}}
+            <div class="event-day"
+                 *ngIf="day.event && !isArray(day.event)"
+                 [style.boxShadow]="'inset 0 0 0 1000px ' + day.event"></div>
+            <div class="events-container"
+                 [style.width]="10 + 5 * (day.event.length - 1) + 'px'"
+                 *ngIf="day.event && isArray(day.event)">
+              <div class="event-day2"
+                   *ngFor="let event of day.event; let i = index;"
+                   [style.transform]="'translateX(' + 50 * i + '%)'"
+                   [style.boxShadow]="'inset 0 0 0 1000px ' + event"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
