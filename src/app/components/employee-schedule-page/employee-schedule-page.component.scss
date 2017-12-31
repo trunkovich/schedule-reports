@@ -53,6 +53,20 @@
         .calendar-wrapper {
           margin-top: 58px;
         }
+
+        .notes-block {
+          margin-top: 50px;
+          h4 {
+            line-height: 42px;
+            font-size: 16px;
+            font-weight: 600;
+          }
+          p {
+            margin-top: 7px;
+            font-size: 16px;
+            line-height: 25px;
+          }
+        }
       }
 
       &.right-block {

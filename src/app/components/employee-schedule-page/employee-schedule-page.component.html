@@ -5,7 +5,7 @@
 
     <div class="left-block side-block">
       <div class="user-block" fxLayout="row">
-        <div class="avatar">
+        <div class="avatar" *ngIf="employee.PhotoUrl">
           <img [src]="employee.PhotoUrl">
         </div>
         <div class="user-info">
@@ -17,6 +17,10 @@
         <app-schedule-calendar [readOnlyMode]="true"
                                [header]="scheduleDate | amDateFormat:'MMMM YYYY'"
                                [days]="calendar.days"></app-schedule-calendar>
+      </div>
+      <div class="notes-block">
+        <h4>Notes</h4>
+        <p>{{calendar.details}}</p>
       </div>
     </div>
 
@@ -93,7 +97,7 @@
           <h4>Preferred OFF-WEEK</h4>
         </div>
         <p>
-          {{calendar.offWeekend.label}}
+          {{calendar.offWeekend?.label}}
         </p>
       </div>
 
