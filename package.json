@@ -8,7 +8,11 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "clone:index": "cp-cli dist/index.html dist/200.html",
+    "surge": "surge -p dist -d trunkovich-paycal-schedule.surge.sh",
+    "build:prod": "ng build -prod --sourcemap",
+    "deploy": "npm run build:prod && npm run clone:index && npm run surge"
   },
   "private": true,
   "dependencies": {
