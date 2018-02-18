@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="scheduleData">
   <div class="page">
     <app-introduction-page [scheduleDate]="scheduleDate"></app-introduction-page>
   </div>
@@ -11,5 +11,15 @@
                                   [calendar]="employeeSchedule.calendar"
                                   [scheduleDate]="scheduleDate"></app-employee-schedule-page>
     </div>
+  </div>
+</div>
+
+<div *ngIf="!scheduleData">
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
   </div>
 </div>
