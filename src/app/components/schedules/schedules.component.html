@@ -1,4 +1,4 @@
-<div *ngIf="scheduleData$ | async; let scheduleData">
+<div *ngIf="scheduleData$ | async; let scheduleData" [class.safari]="isSafari">
   <div *ngIf="scheduleData.length">
     <div class="page">
       <app-introduction-page [scheduleDate]="scheduleDate"></app-introduction-page>

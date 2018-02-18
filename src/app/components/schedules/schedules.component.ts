@@ -5,6 +5,7 @@ import { QueryParams, ScheduleService } from '../../services/schedule.service';
 import { getAllUrlParams } from '../../utils/utils';
 import { ScheduleData } from '../../models/create-schedule.model';
 import { Observable } from 'rxjs/Observable';
+import { detect } from 'detect-browser';
 
 @Component({
   selector: 'app-schedules',
@@ -17,10 +18,16 @@ export class SchedulesComponent implements OnInit {
   scheduleDate: moment.Moment;
   scheduleData$: Observable<ScheduleData[]>;
   errorMessage: string;
+  isSafari: boolean;
 
   constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit() {
+    const browser = detect();
+    if (browser && browser.name && browser.name === 'safari') {
+      this.isSafari = true;
+    }
+
     const params: any = getAllUrlParams();
     if (!params || !params.groupid || !params.scheduleyear || !params.schedulemonth) {
       this.wrongParams = true;

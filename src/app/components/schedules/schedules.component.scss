@@ -12,16 +12,22 @@
     box-sizing: border-box;
     padding: 1px 20px;
   }
+  .safari {
+    .page {
+      height: 1410px;
+    }
+  }
 }
 
 
 @media print {
   :host {
+    padding: 0;
     .page {
       box-shadow: none;
       page-break-after: always;
       margin-bottom: 0;
-      padding: 1px;
+      padding: 1mm;
     }
   }
 }
