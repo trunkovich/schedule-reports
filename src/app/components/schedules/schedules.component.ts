@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { QueryParams, ScheduleService } from '../../services/schedule.service';
 import { getAllUrlParams } from '../../utils/utils';
 import { ScheduleData } from '../../models/create-schedule.model';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-schedules',
@@ -14,7 +15,8 @@ export class SchedulesComponent implements OnInit {
   wrongParams: boolean;
   params: QueryParams;
   scheduleDate: moment.Moment;
-  scheduleData: ScheduleData[];
+  scheduleData$: Observable<ScheduleData[]>;
+  errorMessage: string;
 
   constructor(private scheduleService: ScheduleService) { }
 
@@ -30,9 +32,9 @@ export class SchedulesComponent implements OnInit {
       };
       this.scheduleDate = moment({month: +this.params.scheduleMonth - 1, year: +this.params.scheduleYear});
       this.scheduleService.loadData(this.params)
-        .subscribe((data: ScheduleData[]) => {
-          this.scheduleData = data;
-        });
+        .subscribe(
+          () => this.scheduleData$ = this.scheduleService.filteredScheduleData$,
+          (error: Error) => this.errorMessage = error.message);
     }
   }
 }

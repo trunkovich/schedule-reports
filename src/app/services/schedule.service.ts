@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import 'rxjs/add/observable/throw';
 import { ScheduleRequestByEmployeeListResponse, ScheduleRequestDetailsResponse } from '../models/create-schedule-response.model';
 import { EmployeeResponse } from '../models/employee-response.model';
 import { Employee } from '../models/employee.model';
-import { CreateScheduleDetailsModel, ScheduleData } from '../models/create-schedule.model';
+import {
+  CallUnavailabilityWindowModel,
+  CreateScheduleDetailsModel, EducationalLeaveModel, HospitalistRoundingModel, PreferredCallNightModel, PreferredOffWeekendModel,
+  ScheduleData, VacationWindowModel, VolunteerShiftModel
+} from '../models/create-schedule.model';
 import { RequestCalendar } from './schedule-request-calendar.class';
 import { CallUnavailabilityTypesListResponse } from '../models/call-unavailability-types-list-response.model';
 import { CallUnavailabilityType } from '../models/call-unavailability-type.model';
@@ -29,6 +34,8 @@ export class ScheduleService {
   callUnavailabilityTypes$ = new BehaviorSubject<CallUnavailabilityType[] | null>(null);
   shiftTypes$ = new BehaviorSubject<ShiftType[] | null>(null);
   hospitals$ = new BehaviorSubject<Hospital[] | null>(null);
+  filteredScheduleData$ = new BehaviorSubject<ScheduleData[]>([]);
+  scheduleData: ScheduleData[];
 
   constructor(private httpClient: HttpClient) {}
 
@@ -137,6 +144,9 @@ export class ScheduleService {
     return this.loadScheduleRequests({groupId, scheduleYear, scheduleMonth})
       .pipe(
         switchMap((ids: Array<{scheduleRequestId: number; employeeId: number; }>) => {
+            if (!ids.length) {
+              return Observable.throw(new Error('No Entries'));
+            }
             return forkJoin([
               ..._.map(ids, ({scheduleRequestId, employeeId}) => {
                 return this.loadScheduleRequestDetails(scheduleRequestId);
@@ -165,8 +175,42 @@ export class ScheduleService {
             });
           });
           return arr;
+        }),
+        tap((data: ScheduleData[]) => {
+          this.scheduleData = data;
+          this.filterScheduleData();
         })
       );
   }
 
+  filterScheduleData(): void {
+    this.filteredScheduleData$.next(_.filter(this.scheduleData, data => this.isScheduleFilled(data)));
+  }
+
+  isScheduleFilled(data: ScheduleData): boolean {
+    if (!data.employee || !data.employeeID || !data.report || !data.calendar) {
+      return false;
+    }
+    if (data.calendar.isVacationWindowsReady()) {
+      return true;
+    }
+    if (data.calendar.isCallUnavailabilityReady()) {
+      return true;
+    }
+    if (data.calendar.isCallNightsReady()) {
+      return true;
+    }
+    if (data.calendar.isEducationLeaveReady()) {
+      return true;
+    }
+    if (data.calendar.isHospitalRoundingsReady()) {
+      return true;
+    }
+    if (data.calendar.isOffWeekendReady()) {
+      return true;
+    }
+    if (data.calendar.isVolunteerShiftReady()) {
+      return true;
+    }
+  }
 }

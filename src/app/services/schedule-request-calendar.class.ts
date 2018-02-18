@@ -148,6 +148,13 @@ export class RequestCalendar {
       this.vacationDays = [];
     }
   }
+  isVacationWindowsReady(): boolean {
+    return !!(
+      this.initialData.VacationWindowList &&
+      this.initialData.VacationWindowList.length &&
+      _.some(this.initialData.VacationWindowList, (vacation) => !!vacation.VacationWindowID)
+    );
+  }
 
 
 
@@ -166,6 +173,13 @@ export class RequestCalendar {
     } else {
       this.callUnavailabilityDates = [];
     }
+  }
+  isCallUnavailabilityReady(): boolean {
+    return !!(
+      this.initialData.CallUnavailabilityWindowList &&
+      this.initialData.CallUnavailabilityWindowList.length &&
+      _.some(this.initialData.CallUnavailabilityWindowList, (window) => !!window.CallUnavailabilityWindowID)
+    );
   }
 
 
@@ -186,7 +200,13 @@ export class RequestCalendar {
       this.educationLeaves = [{date: null, name: '', description: ''}];
     }
   }
-
+  isEducationLeaveReady(): boolean {
+    return !!(
+      this.initialData.EducationalLeaveList &&
+      this.initialData.EducationalLeaveList.length &&
+      _.some(this.initialData.EducationalLeaveList, (leave) => !!leave.EducationalLeaveID)
+    );
+  }
 
 
   fillCallNights(callNights: requestModels.PreferredCallNightModel[]) {
@@ -203,7 +223,15 @@ export class RequestCalendar {
       });
     }
   }
-
+  isCallNightsReady(): boolean {
+    return !!(
+      this.initialData.PreferredCallNightList &&
+      this.initialData.PreferredCallNightList.length &&
+      _.filter(this.initialData.PreferredCallNightList, (callNight) =>
+        callNight.CallNightTypeID > 0 && callNight.CallNightTypeID < 3 && callNight.PreferredCallNightID
+      ).length === 2
+    );
+  }
 
 
 
@@ -254,7 +282,13 @@ export class RequestCalendar {
     });
     return weekends;
   }
-
+  isOffWeekendReady(): boolean {
+    return !!(
+      this.initialData.PreferredOffWeekendList &&
+      this.initialData.PreferredOffWeekendList.length &&
+      _.some(this.initialData.PreferredOffWeekendList, (offWeekend) => !!offWeekend.PreferredOffWeekendID)
+    );
+  }
 
 
 
@@ -281,7 +315,13 @@ export class RequestCalendar {
       this.hospitalistRoundings = [null, null];
     }
   }
-
+  isHospitalRoundingsReady(): boolean {
+    return !!(
+      this.initialData.HospitalistRoundingList &&
+      this.initialData.HospitalistRoundingList.length &&
+      _.some(this.initialData.HospitalistRoundingList, (hospitalistRounding) => !!hospitalistRounding.HospitalRoundingID)
+    );
+  }
 
 
 
@@ -296,5 +336,12 @@ export class RequestCalendar {
     } else {
       this.volunteerShift = null;
     }
+  }
+  isVolunteerShiftReady(): boolean {
+    return !!(
+      this.initialData.VolunteerShiftList &&
+      this.initialData.VolunteerShiftList.length &&
+      _.some(this.initialData.VolunteerShiftList, (volunteerShift) => !!volunteerShift.VolunteerShiftID)
+    );
   }
 }

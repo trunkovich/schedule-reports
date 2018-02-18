@@ -1,20 +1,28 @@
-<div *ngIf="scheduleData">
-  <div class="page">
-    <app-introduction-page [scheduleDate]="scheduleDate"></app-introduction-page>
+<div *ngIf="scheduleData$ | async; let scheduleData">
+  <div *ngIf="scheduleData.length">
+    <div class="page">
+      <app-introduction-page [scheduleDate]="scheduleDate"></app-introduction-page>
+    </div>
+    <div *ngFor="let employeeSchedule of scheduleData">
+      <div class="page">
+        <app-employee-profile-page [employee]="employeeSchedule.employee"></app-employee-profile-page>
+      </div>
+      <div class="page">
+        <app-employee-schedule-page [employee]="employeeSchedule.employee"
+                                    [calendar]="employeeSchedule.calendar"
+                                    [scheduleDate]="scheduleDate"></app-employee-schedule-page>
+      </div>
+    </div>
   </div>
-  <div *ngFor="let employeeSchedule of scheduleData">
-    <div class="page">
-      <app-employee-profile-page [employee]="employeeSchedule.employee"></app-employee-profile-page>
-    </div>
-    <div class="page">
-      <app-employee-schedule-page [employee]="employeeSchedule.employee"
-                                  [calendar]="employeeSchedule.calendar"
-                                  [scheduleDate]="scheduleDate"></app-employee-schedule-page>
-    </div>
+  <div *ngIf="!scheduleData.length">
+    no data
   </div>
 </div>
 
-<div *ngIf="!scheduleData">
+
+
+
+<div *ngIf="!errorMessage && !scheduleData$">
   <div class="spinner">
     <div class="rect1"></div>
     <div class="rect2"></div>
@@ -22,4 +30,8 @@
     <div class="rect4"></div>
     <div class="rect5"></div>
   </div>
+</div>
+
+<div *ngIf="errorMessage">
+  {{errorMessage}}
 </div>
